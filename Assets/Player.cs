@@ -37,16 +37,20 @@ public class Player : MonoBehaviour {
                     m_agent.isStopped = false;
                     m_agent.updateRotation = true;
                     m_agent.SetDestination(mousePointOnPlane.Value);
+
+                    var path = new NavMeshPath();
+                    bool isFound = m_agent.CalculatePath(mousePointOnPlane.Value, path);
+                    DrawPath(path.corners);
                 }
             }
         } else {
             Debug.Log($"remainingDistance:{m_agent.remainingDistance} stoppingDistance:{m_agent.stoppingDistance} nextPosition:{m_agent.nextPosition}");
 
             // 旋转
-            /*Vector3 lookAt = m_agent.nextPosition;
-            lookAt.y = transform.position.y;
-            transform.LookAt(m_agent.destination);*/
-            
+            //Vector3 lookAt = m_agent.nextPosition;
+            //lookAt.y = transform.position.y;
+            //transform.LookAt(lookAt);
+
             // 判断行走完成
             if (m_agent.remainingDistance < 0.01f) {
                 m_agent.isStopped = true;
@@ -54,5 +58,14 @@ public class Player : MonoBehaviour {
         }
 
 
+    }
+
+    private void DrawPath (Vector3[] path) {
+        for (int i = 0; i < path.Length; i++) {
+            //Debug.Log($"i:{i} {path[i]}");
+            if (i < path.Length - 1) {
+                Debug.DrawLine(path[i], path[i + 1],Color.red,2f);
+            }
+        }
     }
 }
