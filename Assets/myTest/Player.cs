@@ -23,6 +23,7 @@ public class Player : MonoBehaviour {
     }
 
     private void Start () {
+        Debug.Log("Start");
         m_agent = GetComponent<NavMeshAgent>();
 
         m_agent.isStopped = true;
